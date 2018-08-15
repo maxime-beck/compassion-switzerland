@@ -1,0 +1,7 @@
+<openerp>
+    <data noupdate="1">
+        <record id="calendar_event_tag_marketing" model="calendar.event.type">
+            <field name="name">Campagne Marketing</field>
+        </record>
+    </data>
+</openerp>
