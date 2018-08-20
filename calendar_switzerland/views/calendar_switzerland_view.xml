@@ -36,11 +36,11 @@
                       event_open_popup="true"
                       default_group_by="campaign_event_id"
                       zoomKey="ctrlKey"
-                      colors="#ec7063:user_id == false, #385fff: compassion_event_id != false;"
+                      colors="#ec7063:user_id == false, #385fff: compassion_event_id != false, #fca325:is_flyer_in_post != false;"
                       mode="month"
                       readonly="1"
-                      create="false"
-            />
+                      create="false">
+            </timeline>
         </field>
     </record>
 
@@ -60,7 +60,9 @@
         <field name="model">calendar.event</field>
         <field name="arch" type="xml">
             <search>
-                <filter name ="campaign" string="Event or Campaign" domain="['|',('categ_ids','ilike','event'),('campaign_event_id','!=', False)]"/>
+                <filter name ="event" string="Event" domain="[('categ_ids','ilike','event')]"/>
+                <separator/>
+                <filter name ="campaign" string="Campaign" domain="[('campaign_event_id','!=','False')]"/>
                 <separator/>
                 <filter name ="current_year" string="This year" domain="[('start_datetime', '>=', (context_today() + relativedelta(years=-1)).strftime('%Y-07-01'))]"/>
             </search>
@@ -73,6 +75,7 @@
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
             <form string="Meetings">
+                <field name="is_flyer_in_post" invisible="1"/>
                 <field name="state" invisible="1"/>
                 <field name="is_attendee" invisible="1"/>
                 <field name="attendee_status" invisible="1"/>

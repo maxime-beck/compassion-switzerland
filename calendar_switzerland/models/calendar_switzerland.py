@@ -43,11 +43,20 @@ class CalendarEvent(models.Model):
         compute='_compute_timeline_stop',
         inverse='_inverse_timeline_stop'
     )
+    is_flyer_in_post = fields.Boolean(compute='_compute_is_flyer_in_post',
+                                      store=True)
 
     @api.multi
     def _compute_timeline_start(self):
         for event in self:
             event.start_timeline = event.start_datetime or event.start_date
+            #for event_type in event.categ_ids:
+                #event.is_flyer_in_post = (event_type.name == 'flyer in post')
+
+    @api.depends('start_timeline')
+    def _compute_is_flyer_in_post(self):
+        for event_type in self.categ_ids:
+            self.is_flyer_in_post = (event_type.name == 'flyer in post')
 
     @api.multi
     def _compute_timeline_stop(self):
